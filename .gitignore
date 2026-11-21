@@ -1,0 +1,38 @@
+# зависимости
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+
+# Next.js
+/.next/
+/out/
+next-env.d.ts
+
+# сборка
+/build
+
+# системные файлы
+.DS_Store
+*.pem
+
+# логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# переменные окружения (не коммитить)
+.env*
+!.env.example
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# тестовые аудиофайлы в корне
+/*.mp3
+/*.ogg
+/*.wav
