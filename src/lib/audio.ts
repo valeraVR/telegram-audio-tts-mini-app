@@ -20,21 +20,24 @@ let edgeDownUntil = 0; // после сбоя Edge-TTS не ждём его по
 
 async function fetchEdge(text: string, settings: VoiceSettings): Promise<Blob | null> {
   if (Date.now() < edgeDownUntil) return null;
-  try {
-    const res = await fetch("/api/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, settings }),
-      signal: AbortSignal.timeout(20000),
-    });
-    if (res.ok) {
-      const blob = await res.blob();
-      if (blob.size > 0) return blob;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, settings }),
+        signal: AbortSignal.timeout(55000),
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        if (blob.size > 0) return blob;
+      }
+    } catch {
+      /* сеть / таймаут */
     }
-  } catch {
-    /* сеть / таймаут */
+    if (attempt === 0) await new Promise((r) => setTimeout(r, 1000));
   }
-  edgeDownUntil = Date.now() + 60000;
+  edgeDownUntil = Date.now() + 10000;
   return null;
 }
 
