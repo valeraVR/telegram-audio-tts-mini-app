@@ -76,9 +76,11 @@ npm run build
 
 ## Альтернативный бэкенд (Python)
 
-В каталоге `backend/bot.py` — FastAPI + aiogram + edge-tts + ffmpeg. Запуск:
+Python-версия (FastAPI + aiogram + edge-tts + ffmpeg) вынесена в отдельную ветку
+`python-backend` репозитория, чтобы не мешать сборке Next.js на Vercel:
 
 ```bash
+git checkout python-backend
 cd backend
 pip install -r requirements.txt
 BOT_TOKEN=... WEBAPP_URL=... uvicorn bot:app --host 0.0.0.0 --port 8000
